@@ -74,7 +74,8 @@ func TestGlyphWidths(t *testing.T) {
 
 func TestDrawString(t *testing.T) {
 	for filename, s := range map[string]string{
-		"hello-world": "Hello, world!",
+		"hello-world": "Hello, world!", // no kerning
+		"salt-n-pepa": "Salt & Pepa",   // kerning
 	} {
 		f, err := os.Open("04b_08/examples/" + filename + ".png")
 		assert.NilError(t, err)
@@ -94,6 +95,7 @@ func TestDrawString(t *testing.T) {
 		d.DrawString(s)
 
 		// f, err = os.Create(filename + ".png")
+		// assert.NilError(t, err)
 		// defer f.Close()
 		// assert.NilError(t, png.Encode(f, got))
 

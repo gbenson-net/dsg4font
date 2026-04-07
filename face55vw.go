@@ -2,6 +2,8 @@ package microfont
 
 import (
 	"image"
+	"iter"
+	"maps"
 
 	"golang.org/x/image/font"
 	"golang.org/x/image/math/fixed"
@@ -18,6 +20,8 @@ type Face55vw struct {
 	// Ranges map runes to sub-images of Mask. The rune ranges must not
 	// overlap, and must be in increasing rune order.
 	Ranges []Range
+	// Kernings maps rune pairs to kerning adjustments.
+	Kernings map[string]int
 }
 
 // Close implements [io.Closer].
@@ -64,7 +68,16 @@ func (f *Face55vw) GlyphAdvance(r rune) (advance fixed.Int26_6, ok bool) {
 
 // Kern implements [font.Face].
 func (f *Face55vw) Kern(r0, r1 rune) fixed.Int26_6 {
-	return 0
+	return fixed.I(f.Kernings[string([]rune{r0, r1})])
+}
+
+// UpdateKernings adds the values from seq to the face's kernings.
+// If an adjustment already exists, its value will be overwritten.
+func (f *Face55vw) UpdateKernings(seq iter.Seq2[string, int]) {
+	if f.Kernings == nil {
+		f.Kernings = make(map[string]int)
+	}
+	maps.Insert(f.Kernings, seq)
 }
 
 // Metrics implements [font.Face].
