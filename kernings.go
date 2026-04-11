@@ -7,7 +7,31 @@ import (
 )
 
 func init() {
+	kernFace04B03B()
 	kernFace04B08()
+}
+
+// kernFace04B03B applies kernings to Face04B03B.
+func kernFace04B03B() {
+	kernings := map[string]int{
+		" &": -1,
+		"& ": -1,
+		"LT": -1,
+		`L\`: -1,
+		"T/": -1,
+		"TJ": -1,
+		"T_": -1,
+		`\T`: -1,
+		"_T": -1,
+		"V/": -1,
+		"VJ": -1,
+		"V_": -1,
+	}
+	for _, c := range []byte("abcdefghijklmnopqrstuvwxyz") {
+		kernings["T"+string(c)] = -1
+	}
+
+	Face04B03B.UpdateKernings(maps.All(kernings))
 }
 
 // kernFace04B08 applies kernings to Face04B08.
