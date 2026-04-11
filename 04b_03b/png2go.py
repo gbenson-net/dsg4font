@@ -5,7 +5,7 @@ from PIL import Image, ImageChops
 
 
 def main():
-    src = Image.open("04b_08.png").convert("L")
+    src = Image.open("04b_03b.png").convert("L")
     src = ImageChops.invert(src)
     glyphs = [0]
     for o in range(33, 128):
@@ -14,22 +14,19 @@ def main():
         img = src.crop((x, y, x+8, y+8))
         l, t, r, b = img.getbbox()
         w = r - l
-        h = b - t
-        assert l == int(o == 33)
+        h = b - 1
+        assert l == 0
         assert t >= 1
         assert 0 < w <= 6
-        assert 0 < h <= 5
-        img = img.crop((0, 1, 6, 6))
-        assert img.size == (6, 5)
+        assert 0 < h <= 6
+        img = img.crop((0, 1, 6, 7))
+        assert img.size == (6, 6)
         v = 0
         for x in range(img.width-1, -1, -1):
             for y in range(img.height-1, -1, -1):
                 v <<= 1
                 if img.getpixel((x, y)):
                     v |= 1
-        if o in range(ord("a"), ord("z")+1):
-            assert glyphs[o-64] == v
-            continue
         glyphs.append(v)
     glyphs = "\n\t\t".join(wrap(", ".join(map(str, glyphs)), width=70))
 
@@ -54,26 +51,26 @@ def main():
 
 package {package}
 
-// Face04B08 is a Face based on the 04B-08 TrueType font by Yuji Oshimoto
+// Face04B03B is a Face based on the 04B-03B TrueType font by Yuji Oshimoto
 // (http://www.dsg4.com/04/).
 //
 // At the moment, it holds the printable characters in ASCII starting with
-// space, and the Unicode replacement character U+FFFD.  Most glyphs are 6
-// pixels square, though some are narrower and one is wider.
+// space, and the Unicode replacement character U+FFFD.  Most glyphs are 5
+// pixels wide by 6 pixels high, though some are narrower and some descend
+// further.
 //
 // Its data is entirely self-contained and does not require loading from
 // separate files.
-var Face04B08 = &Face55vw{{
+var Face04B03B = &Face56vw{{
 	Ascent:  5,
-	Descent: 1,
-	Glyphs: []Glyph55vw{{
+	Descent: 2,
+	XHeight: 3,
+	Glyphs: []Glyph56vw{{
 		{glyphs},
 	}},
 	Ranges: []Range{{
-		R(' ', 'a', 0),
-		R('a', 'z'+1, int('A'-' ')), // map lowercase runes to uppercase glyphs
-		R('z'+1, 127, 65),
-		R('\\ufffd', '\\ufffe', 69),
+		R(' ', 127, 0),
+		R('\\ufffd', '\\ufffe', 95),
 	}},
 }}""")
 
