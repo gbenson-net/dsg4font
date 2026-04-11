@@ -27,6 +27,12 @@ func kernFace04B03() {
 		"V/": -1,
 		"VJ": -1,
 		"V_": -1,
+		"et": -1,
+		"St": -1,
+		"st": -1,
+		"rt": -1,
+		": ": -1,
+		"; ": -1,
 	}
 	for _, c := range []byte("acdefgjoqs") {
 		kernings["T"+string(c)] = -1
