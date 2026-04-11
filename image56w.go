@@ -27,7 +27,7 @@ func (im image56vw) Bounds() image.Rectangle {
 // width returns the width of the image.
 func (im image56vw) width() int {
 	if im == 0 {
-		return 4 // blank
+		return 3 // blank
 	}
 	return ((bits.Len32(uint32(im)) - 1) / 6) + 1
 }
