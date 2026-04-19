@@ -16,6 +16,7 @@ func Test04B03BDrawString(t *testing.T) {
 	for filename, s := range map[string]string{
 		"hello-world": "Hello, world!",      // no kerning
 		"salt-n-bits": "SALT & TV Ta Tb Td", // kerning
+		"arrows":      "←↑→↓",               // arrows
 	} {
 		f, err := os.Open("04b_03b/examples/" + filename + ".png")
 		assert.NilError(t, err)

@@ -33,7 +33,7 @@ func TestGlyphMetrics(t *testing.T) {
 		'~': 5,
 		'A': 6,
 		'&': 7,
-		'↑': 6, // not found
+		'⍼': 6, // not found
 	} {
 		wantBounds := fixed.R(0, -5, width, +1)
 		wantAdvance := fixed.I(width)

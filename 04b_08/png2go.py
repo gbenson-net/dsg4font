@@ -31,6 +31,18 @@ def main():
             assert glyphs[o-64] == v
             continue
         glyphs.append(v)
+
+    img = Image.open("examples/arrows.png")
+    for i in range(4):
+        v = 0
+        for j in range(4, -1, -1):
+            x = i * 6 + j
+            for y in range(4, -1, -1):
+                v <<= 1
+                if img.getpixel((x, y)):
+                    v |= 1
+        glyphs.insert(-1, v)
+
     glyphs = "\n\t\t".join(wrap(", ".join(map(str, glyphs)), width=70))
 
     scriptpath = Path(__file__)
@@ -73,7 +85,8 @@ var Face04B08 = &Face55vw{{
 		R(' ', 'a', 0),
 		R('a', 'z'+1, int('A'-' ')), // map lowercase runes to uppercase glyphs
 		R('z'+1, 127, 65),
-		R('\\ufffd', '\\ufffe', 69),
+		R('\\u2190', '\\u2194', 69),
+		R('\\ufffd', '\\ufffe', 73),
 	}},
 }}""")
 

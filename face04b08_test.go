@@ -29,7 +29,9 @@ func TestDefinedGlyphIndex(t *testing.T) {
 		'z':      58, // mapped
 		'{':      65, // straight after '`'
 		'~':      68,
-		'\ufffd': 69,
+		'←':      69,
+		'↓':      72,
+		'\ufffd': 73,
 	} {
 		got, ok := Face04B08.glyphIndex(r)
 		assert.Check(t, ok)
@@ -42,7 +44,7 @@ func TestUndefinedGlyphIndex(t *testing.T) {
 	for _, r := range rr {
 		got, ok := Face04B08.glyphIndex(r)
 		assert.Check(t, ok)
-		assert.Equal(t, got, 69)
+		assert.Equal(t, got, 73)
 	}
 }
 
@@ -76,6 +78,7 @@ func TestDrawString(t *testing.T) {
 	for filename, s := range map[string]string{
 		"hello-world": "Hello, world!", // no kerning
 		"salt-n-pepa": "Salt & Pepa",   // kerning
+		"arrows":      "←↑→↓",          // arrows
 	} {
 		f, err := os.Open("04b_08/examples/" + filename + ".png")
 		assert.NilError(t, err)
