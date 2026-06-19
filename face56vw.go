@@ -96,23 +96,9 @@ func (f *Face56vw) Metrics() font.Metrics {
 }
 
 func (f *Face56vw) glyph(r rune) (g Glyph56vw, ok bool) {
-	index, ok := f.glyphIndex(r)
+	index, ok := GlyphIndex(f.Ranges, r)
 	if ok {
 		g = f.Glyphs[index]
 	}
 	return
-}
-
-func (f *Face56vw) glyphIndex(r rune) (index int, ok bool) {
-	for {
-		for _, rr := range f.Ranges {
-			if (rr.Low <= r) && (r < rr.High) {
-				return int(r-rr.Low) + rr.Offset, true
-			}
-		}
-		if r == '\ufffd' {
-			return 0, false
-		}
-		r = '\ufffd'
-	}
 }

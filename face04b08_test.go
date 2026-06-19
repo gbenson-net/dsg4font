@@ -33,7 +33,7 @@ func TestDefinedGlyphIndex(t *testing.T) {
 		'↓':      72,
 		'\ufffd': 73,
 	} {
-		got, ok := Face04B08.glyphIndex(r)
+		got, ok := GlyphIndex(Face04B08.Ranges, r)
 		assert.Check(t, ok)
 		assert.Equal(t, got, want)
 	}
@@ -42,7 +42,7 @@ func TestDefinedGlyphIndex(t *testing.T) {
 func TestUndefinedGlyphIndex(t *testing.T) {
 	const rr = "\n\u007f\u0080\u00ff\ufffc\ufffe\uffff£€¥Ядаȝვეპხის⠊呪術廻戦"
 	for _, r := range rr {
-		got, ok := Face04B08.glyphIndex(r)
+		got, ok := GlyphIndex(Face04B08.Ranges, r)
 		assert.Check(t, ok)
 		assert.Equal(t, got, 73)
 	}
