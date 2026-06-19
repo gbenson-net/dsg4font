@@ -37,7 +37,7 @@ func (f *Face55vw) Glyph(dot fixed.Point26_6, r rune) (
 	advance fixed.Int26_6,
 	ok bool,
 ) {
-	g, ok := f.glyph(r)
+	g, ok := f.GlyphFor(r)
 	if ok {
 		dr, mask, maskp, advance = g.draw(f, dot)
 	}
@@ -50,7 +50,7 @@ func (f *Face55vw) GlyphBounds(r rune) (
 	advance fixed.Int26_6,
 	ok bool,
 ) {
-	g, ok := f.glyph(r)
+	g, ok := f.GlyphFor(r)
 	if ok {
 		bounds, advance = g.bounds(f)
 	}
@@ -59,7 +59,7 @@ func (f *Face55vw) GlyphBounds(r rune) (
 
 // GlyphAdvance implements [font.Face].
 func (f *Face55vw) GlyphAdvance(r rune) (advance fixed.Int26_6, ok bool) {
-	g, ok := f.glyph(r)
+	g, ok := f.GlyphFor(r)
 	if ok {
 		advance = g.advance()
 	}
@@ -92,7 +92,11 @@ func (f *Face55vw) Metrics() font.Metrics {
 	}
 }
 
-func (f *Face55vw) glyph(r rune) (g Glyph55vw, ok bool) {
+// GlyphFor returns the glyph representing r, or the glyph representing
+// the Unicode replacement character U+FFFD if no glyph specifically
+// represents r.  It returns !ok if no glyph represents either r or the
+// Unicode replacement character.
+func (f *Face55vw) GlyphFor(r rune) (g Glyph55vw, ok bool) {
 	index, ok := GlyphIndex(f.Ranges, r)
 	if ok {
 		g = f.Glyphs[index]
